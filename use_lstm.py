@@ -47,12 +47,14 @@ y = np_utils.to_categorical(dataY)
 model = Sequential()
 model.add(LSTM(256, input_shape=(X.shape[1], X.shape[2])))
 model.add(Dropout(0.2))
+model.add(LSTM(256))
+model.add(Dropout(0.2))
 model.add(Dense(y.shape[1], activation='softmax'))
 
 try:
     filename2 = sys.argv[1]
 except:
-    filename2 = glob("weights-improvement-communist_manifesto.txt-19-*.hdf5")[0]
+    filename2 = glob("weights-improvement-communist_manifesto.txt-19-*-bigger.hdf5")[0]
 model.load_weights(filename2)
 model.compile(loss='categorical_crossentropy', optimizer='adam')
 
