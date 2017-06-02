@@ -51,7 +51,7 @@ checkpoint = ModelCheckpoint(filepath, monitor='loss', verbose=1, save_best_only
 callbacks_list = [checkpoint]
 
 try:
-    model.fit(X, y, epochs=20, batch_size=64, callbacks=callbacks_list, verbose=1)
+    model.fit(X, y, epochs=20, batch_size=128, callbacks=callbacks_list, verbose=1)
 except MemoryError as err:
     print(str(err))
 
