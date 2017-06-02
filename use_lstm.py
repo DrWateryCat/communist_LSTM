@@ -67,7 +67,7 @@ for i in range(1000):
     x = numpy.reshape(pattern, (1, len(pattern), 1))
     x = x / float(n_vocab)
 
-    prediction = model.predict(x, verbose=1)
+    prediction = model.predict(x, verbose=0)
     index = numpy.argmax(prediction)
     result = int_to_chars[index]
     seq_in = [int_to_chars[val] for val in pattern]
