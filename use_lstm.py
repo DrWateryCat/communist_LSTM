@@ -16,8 +16,8 @@ with open(filename, mode='r', encoding='utf8') as file:
 raw_text = raw_text.lower()
 
 chars = sorted(list(set(raw_text)))
-char_to_int = (dict(c, i) for i, c in enumerate(chars))
-int_to_chars = (dict(i, c) for i, c in enumerate(chars))
+char_to_int = dict((c, i) for i, c in enumerate(chars))
+int_to_chars = dict((i, c) for i, c in enumerate(chars))
 
 n_chars = len(raw_text)
 n_vocab = len(chars)
