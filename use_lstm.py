@@ -49,7 +49,10 @@ model.add(LSTM(256, input_shape=(X.shape[1], X.shape[2])))
 model.add(Dropout(0.2))
 model.add(Dense(y.shape[1], activation='softmax'))
 
-filename2 = sys.argv[1] if sys.argv[1] else glob("weights-improvement-" + str(filename) + "-19-*.hdf5")
+try:
+    filename2 = sys.argv[1]
+except:
+    filename2 = glob("weights-improvement-communist_manifesto.txt-19-*.hdf5")[0]
 model.load_weights(filename2)
 model.compile(loss='categorical_crossentropy', optimizer='adam')
 
