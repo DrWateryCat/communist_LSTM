@@ -6,7 +6,10 @@ from keras.layers import LSTM
 from keras.callbacks import ModelCheckpoint
 from keras.utils import np_utils
 
-filename = 'combined_works.txt'
+try:
+    filename = sys.argv[1]
+except:
+    filename = "communist_manifesto.txt"
 raw_text = ""
 with open(filename, mode='r', encoding='utf8') as file:
     for line in file:
