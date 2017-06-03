@@ -1,4 +1,5 @@
 import numpy
+import argparse
 from keras.models import Sequential
 from keras.layers import Dense
 from keras.layers import Dropout
@@ -6,10 +7,16 @@ from keras.layers import LSTM
 from keras.callbacks import ModelCheckpoint
 from keras.utils import np_utils
 
-try:
-    filename = sys.argv[1]
-except:
-    filename = "communist_manifesto.txt"
+parser = argparse.ArgumentParser()
+parser.add_argument("--data", help="The training data")
+parser.add_argument("--epochs" help="Number of epochs to train for")
+args = parser.parse_args()
+
+filename = args.data
+if args.epochs:
+    epochs = args.epochs
+else:
+    epochs = 30
 raw_text = ""
 with open(filename, mode='r', encoding='utf8') as file:
     for line in file:
@@ -56,7 +63,7 @@ checkpoint = ModelCheckpoint(filepath, monitor='loss', verbose=1, save_best_only
 callbacks_list = [checkpoint]
 
 try:
-    model.fit(X, y, epochs=50, batch_size=64, callbacks=callbacks_list, verbose=1)
+    model.fit(X, y, epochs=epochs, batch_size=64, callbacks=callbacks_list, verbose=1)
 except MemoryError as err:
     print(str(err))
 

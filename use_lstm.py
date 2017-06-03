@@ -1,4 +1,5 @@
 import sys
+import argparse
 import numpy
 from glob import glob
 from keras.models import Sequential
@@ -8,10 +9,15 @@ from keras.layers import LSTM
 from keras.callbacks import ModelCheckpoint
 from keras.utils import np_utils
 
-try:
-    filename = sys.argv[1]
-except:
-    filename = "communist_manifesto.txt"
+parser = argparse.ArgumentParser()
+parser.add_argument("--data", help="The training data")
+parser.add_argument("--weights", help="Neural Network weights")
+
+args = parser.parse_args()
+
+filename = args.data
+filename2 = args.weights
+
 raw_text = ""
 with open(filename, mode='r', encoding='utf8') as file:
     for line in file:
@@ -54,10 +60,6 @@ model.add(LSTM(256))
 model.add(Dropout(0.2))
 model.add(Dense(y.shape[1], activation='softmax'))
 
-try:
-    filename2 = sys.argv[2]
-except:
-    filename2 = glob("weights-improvement-communist_manifesto.txt-19-*-bigger.hdf5")[0]
 model.load_weights(filename2)
 model.compile(loss='categorical_crossentropy', optimizer='adam')
 
