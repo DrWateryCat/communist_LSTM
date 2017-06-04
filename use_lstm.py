@@ -12,11 +12,13 @@ from keras.utils import np_utils
 parser = argparse.ArgumentParser()
 parser.add_argument("--data", help="The training data")
 parser.add_argument("--weights", help="Neural Network weights")
+parser.add_argument("--old", help="The old model")
 
 args = parser.parse_args()
 
 filename = args.data
 filename2 = args.weights
+old_weights = args.old
 
 raw_text = ""
 with open(filename, mode='r', encoding='utf8') as file:
@@ -56,8 +58,10 @@ y = np_utils.to_categorical(dataY)
 model = Sequential()
 model.add(LSTM(256, input_shape=(X.shape[1], X.shape[2]), return_sequences=True))
 model.add(Dropout(0.2))
-model.add(LSTM(256))
-model.add(Dropout(0.2))
+if not old_weights:
+    model.add(LSTM(256))
+    model.add(Dropout(0.2))
+    
 model.add(Dense(y.shape[1], activation='softmax'))
 
 model.load_weights(filename2)
